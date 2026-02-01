@@ -1,6 +1,30 @@
 # AWS S3 Interview Mastery with Spring Boot
 
+![Architecture Diagram](architecture_diagram.png)
+
 This project is a comprehensive guide and hands-on laboratory for mastering **Amazon S3** using **Spring Boot** and **AWS SDK v2**.
+
+## 🏗 System Architecture
+
+```mermaid
+graph TD
+    User([User/Client]) -->|REST API Requests| Controller[Spring Boot Controllers]
+    Controller -->|Invoke Logic| Service[S3 Service]
+    Service -->|SDK v2 Calls| S3[Amazon S3 / LocalStack]
+    
+    subgraph "Spring Boot Application"
+        Controller
+        Service
+        Config[S3 Config]
+    end
+    
+    subgraph "Infrastructure"
+        S3
+    end
+    
+    User -.->|Direct Access| PS[Presigned URL Access]
+    PS -.-> S3
+```
 
 ## 🚀 Key S3 Concepts for Interviews
 
