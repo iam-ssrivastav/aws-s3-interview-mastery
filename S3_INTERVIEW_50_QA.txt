@@ -1,0 +1,163 @@
+S3 INTERVIEW MASTERY: 50 QUESTIONS AND ANSWERS
+
+TOPIC 1: FUNDAMENTALS AND BASICS
+
+Question 1: What is Amazon S3 and what is its primary use case?
+Answer: Amazon S3 (Simple Storage Service) is an object storage service offering scalability, data availability, security, and performance. Use cases include data lakes, websites, backup/restore, archive, and big data analytics.
+
+Question 2: What is the S3 strong consistency model?
+Answer: Since late 2020, S3 provides strong read-after-write consistency for all operations (PUT and DELETE). Any GET following a successful write returns the newest data immediately.
+
+Question 3: What is the difference between a Bucket and an Object?
+Answer: A bucket is a top-level container for data. An object is the actual file stored, consisting of data, a unique key (identifier), and metadata.
+
+Question 4: What is the maximum size of a single S3 object?
+Answer: A single object can be up to 5 Terabytes.
+
+Question 5: What is the maximum size of a single PUT operation?
+Answer: 5 Gigabytes. For files larger than this, you must use Multipart Upload.
+
+Question 6: Does S3 have a limit on the number of objects per bucket?
+Answer: No, you can store an unlimited number of objects in a single bucket.
+
+Question 7: What is the limit on the number of buckets per account?
+Answer: By default, 100 buckets per AWS account. This can be increased by a service limit increase request.
+
+Question 8: What is the difference between Virtual-hosted-style and Path-style URLs?
+Answer: Virtual-hosted-style appends the bucket name to the domain (bucketname.s3.amazonaws.com), while Path-style puts the bucket name after the domain (s3.amazonaws.com/bucketname). AWS is phasing out Path-style for better scalability via DNS.
+
+TOPIC 2: STORAGE CLASSES
+
+Question 9: Explain S3 Standard storage class.
+Answer: High durability, availability, and performance for frequently accessed data. Replicated across at least 3 Availability Zones.
+
+Question 10: What is S3 Intelligent-Tiering?
+Answer: It automatically moves data between access tiers based on access frequency without performance impact or operational overhead. It has two main tiers: Frequent Access and Infrequent Access.
+
+Question 11: When should you use S3 Standard-IA (Infrequent Access)?
+Answer: For data that is accessed less frequently but requires rapid access (milliseconds) when needed. It is cheaper than Standard but has a retrieval fee.
+
+Question 12: What is S3 One Zone-IA?
+Answer: It is for data that is infrequently accessed but stored in only one Availability Zone. It is 20 percent cheaper than Standard-IA but less durable (data lost if the AZ is destroyed).
+
+Question 13: Difference between S3 Glacier Flexible Retrieval and Glacier Deep Archive?
+Answer: Flexible Retrieval allows access in minutes to hours. Deep Archive is the lowest cost but takes 12 to 48 hours for retrieval.
+
+Question 14: What is S3 Glacier Instant Retrieval?
+Answer: A storage class that delivers the lowest cost storage for long-lived data that is rarely accessed but requires millisecond retrieval.
+
+Question 15: What is the minimum storage duration for S3 Standard-IA?
+Answer: 30 days. If you delete data before 30 days, you are still charged for the full 30 days.
+
+TOPIC 3: SECURITY AND ACCESS CONTROL
+
+Question 16: What is a Bucket Policy?
+Answer: A resource-based JSON policy attached directly to a bucket to grant permissions to users from the same or different AWS accounts.
+
+Question 17: What is the use of IAM Policies in S3?
+Answer: IAM policies are attached to Users, Groups, or Roles to define what S3 actions those identities can perform across buckets.
+
+Question 18: What is a Presigned URL?
+Answer: A URL generated using your security credentials to grant temporary access to an object. It allows users to download or upload data without needing AWS credentials or making the bucket public.
+
+Question 19: How do you enforce S3 encryption in transit?
+Answer: By using a bucket policy that denies any request that does not use Secure Transport (HTTPS).
+
+Question 20: Explain SSE-S3 vs SSE-KMS.
+Answer: SSE-S3 uses keys managed by S3. SSE-KMS uses keys from the AWS Key Management Service, offering an audit trail and more granular control over key rotation.
+
+Question 21: What is S3 Block Public Access?
+Answer: A set of controls that provide a way to stay secure by preventing any public access to your buckets and objects at the account or bucket level.
+
+Question 22: What are S3 Access Points?
+Answer: They simplify data access for any AWS service or customer application that stores data in S3 by creating unique hostnames with dedicated policies.
+
+Question 23: How do you access S3 from a private VPC without internet?
+Answer: By using a VPC Endpoint for S3 (Gateway Endpoint). This routes traffic directly over the AWS network.
+
+Question 24: What is the purpose of S3 Access Analyzer?
+Answer: It helps you identify buckets that are accessible by anyone on the internet or shared with other AWS accounts, helping you verify security.
+
+TOPIC 4: DATA PROTECTION AND COMPLIANCE
+
+Question 25: What happens when you enable Versioning on a bucket?
+Answer: S3 keeps all versions of an object (including deletes). If you delete an object, S3 places a Delete Marker instead of physical deletion.
+
+Question 26: How do you permanently delete an object from a versioned bucket?
+Answer: You must specify the version ID in the delete request.
+
+Question 27: What is MFA Delete?
+Answer: A security feature that requires multi-factor authentication to change the versioning state of a bucket or permanently delete a versioned object.
+
+Question 28: Explain S3 Object Lock.
+Answer: It allows you to store objects using a WORM (Write Once Read Many) model. It blocks object version deletion for a specified retention period.
+
+Question 29: Difference between Governance mode and Compliance mode in Object Lock?
+Answer: In Governance mode, users with special permissions can still delete or modify. In Compliance mode, nobody (including the root user) can delete the object until the retention period expires.
+
+Question 30: What is a Legal Hold in S3?
+Answer: Similar to Object Lock, but it has no expiration date. It remains until explicitly removed by a user with permissions.
+
+Question 31: What is S3 Cross-Region Replication (CRR)?
+Answer: Automatically and asynchronously copies objects across buckets in different AWS Regions for disaster recovery or latency reduction.
+
+Question 32: What is S3 Same-Region Replication (SRR)?
+Answer: Automatically copies objects between buckets in the same AWS Region for log aggregation or isolation between accounts.
+
+TOPIC 5: PERFORMANCE AND MANAGEMENT
+
+Question 33: What is S3 Transfer Acceleration?
+Answer: It speeds up uploads by routing data through CloudFront Edge Locations and then over the AWS private network to your bucket.
+
+Question 34: How does S3 scale request performance?
+Answer: S3 scales to high request rates automatically. You can achieve at least 3,500 PUT/POST/DELETE and 5,500 GET requests per second per prefix.
+
+Question 35: Why use prefixes to organize S3 objects?
+Answer: While S3 is flat, using prefixes creates a virtual folder structure and helps in distributing traffic across different S3 partitions for better performance.
+
+Question 36: What is S3 Select?
+Answer: It allows you to retrieve only a subset of data from an object (CSV, JSON, Parquet) using simple SQL expressions, reducing data transfer and latency.
+
+Question 37: What is S3 Object Lambda?
+Answer: It allows you to add your own code to S3 GET requests to process and transform data as it is being retrieved (e.g., masking PII data).
+
+Question 38: What is S3 Inventory?
+Answer: A tool that provides scheduled reports listing your objects and their metadata for auditing or management purposes.
+
+Question 39: What is S3 Storage Lens?
+Answer: An analytics feature that provides organization-wide visibility into object storage usage and activity trends.
+
+Question 40: What is S3 Batch Operations?
+Answer: A feature to perform large-scale operations (like copying millions of files or changing tags) on billions of objects with a single request.
+
+TOPIC 6: SPRING BOOT AND SDK V2
+
+Question 41: Why use AWS SDK for Java v2 instead of v1?
+Answer: V2 is built on Netty and supports non-blocking I/O, better performance, reduced memory usage, and improved ease of use with builders.
+
+Question 42: What is the S3TransferManager in SDK v2?
+Answer: A high-level library that simplifies multipart uploads and downloads. It automatically uses parallel processing for performance.
+
+Question 43: How do you handle S3 exceptions in a Spring Boot application?
+Answer: Catch S3Exception and check for specific error codes like NoSuchKey or NoSuchBucket to return meaningful API responses.
+
+Question 44: Difference between S3Client and S3AsyncClient?
+Answer: S3Client is for synchronous, blocking calls. S3AsyncClient is for asynchronous, non-blocking calls using CompletableFuture.
+
+Question 45: How do you configure a custom endpoint for S3 in Spring Boot?
+Answer: Use the .endpointOverride() method in the S3Client builder. This is useful for LocalStack or Minio.
+
+Question 46: How to implement multipart upload manually in Java?
+Answer: 1. Initiate upload. 2. Upload segments using UploadPartRequest. 3. Finalize using CompleteMultipartUploadRequest with all ETag values.
+
+Question 47: What is the purpose of .forcePathStyle(true) in S3 configuration?
+Answer: It tells the client to use Path-style URLs (domain/bucket) instead of Virtual-hosted-style. This is often required when using local emulators like LocalStack.
+
+Question 48: How to set custom metadata on an object during upload?
+Answer: Use the .metadata(Map) method in the PutObjectRequest builder.
+
+Question 49: How to test S3 logic without an internet connection or AWS account?
+Answer: Use LocalStack in a Docker container and point your Spring Boot application to the local container endpoint.
+
+Question 50: How do you handle rate-limiting or 503 errors in Java?
+Answer: The AWS SDK v2 has built-in retry logic with exponential backoff. You can customize the RetryPolicy in the client configuration to handle these cases better.

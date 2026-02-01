@@ -1,0 +1,62 @@
+S3 INTERVIEW MASTERY: QUESTIONS AND ANSWERS
+
+TOPIC 1: FUNDAMENTALS AND CONSISTENCY
+
+Question 1: What is Amazon S3 and what is its primary use case?
+Answer: Amazon S3 (Simple Storage Service) is an object storage service that offers industry-leading scalability, data availability, security, and performance. Its primary use case is storing and retrieving any amount of data from anywhere—such as data lakes, websites, mobile applications, backup and restore, archive, enterprise applications, IoT devices, and big data analytics.
+
+Question 2: What is the S3 consistency model?
+Answer: Since December 2020, S3 provides strong read-after-write consistency for all operations. This means after a successful PUT of a new object or an overwrite of an existing object, any subsequent GET or LIST request will immediately receive the latest version of the object. This applies to all regions and all objects.
+
+Question 3: Difference between Bucket and Object?
+Answer: A bucket is a container for objects stored in S3. Every object is contained in a bucket. Buckets have a flat hierarchy, but you can use prefixes (folders) to organize data. You can have up to 100 buckets per account by default. An object consists of data, a key (its unique identifier), and metadata.
+
+TOPIC 2: STORAGE CLASSES AND LIFECYCLE
+
+Question 4: Explain the different S3 Storage Classes.
+Answer: 
+1. S3 Standard: For frequently accessed data.
+2. S3 Intelligent-Tiering: For data with unknown/changing access patterns (automatically moves data between tiers).
+3. S3 Standard-IA: For long-lived data that is less frequently accessed but requires rapid access when needed.
+4. S3 One Zone-IA: Same as Standard-IA but stored in a single Availability Zone (lower cost, lower durability).
+5. S3 Glacier Instant Retrieval: Archive data with millisecond access.
+6. S3 Glacier Flexible Retrieval: Archive data with retrieval from minutes to hours.
+7. S3 Glacier Deep Archive: Lowest cost storage for long-term retention (retrieval within 12-48 hours).
+
+Question 5: What are S3 Lifecycle Policies?
+Answer: Lifecycle policies allow you to manage your objects so they are stored cost-effectively throughout their lifecycle. You can define rules to transition objects to less expensive storage classes (e.g., move to Glacier after 30 days) or expire/delete them after a specific period.
+
+TOPIC 3: PERFORMANCE AND LARGE FILES
+
+Question 6: How do you handle large file uploads (e.g., 5GB+)?
+Answer: You must use the Multipart Upload API. It allows you to upload a single object as a set of parts. Each part is a contiguous portion of the object's data. You can upload these parts independently and in any order. If transmission of any part fails, you can retransmit that part without affecting other parts. It is recommended for files above 100MB and mandatory for files above 5GB.
+
+Question 7: What is S3 Transfer Acceleration?
+Answer: It is a bucket-level feature that enables fast, easy, and secure transfers of files over long distances between your client and an S3 bucket. It takes advantage of Amazon CloudFront’s globally distributed edge locations to route data over the optimized AWS private network.
+
+TOPIC 4: SECURITY AND ACCESS CONTROL
+
+Question 8: What is a Presigned URL?
+Answer: A presigned URL gives you temporary access to a specific S3 object. When you create a presigned URL, you associate it with a specific action (GET or PUT) and an expiration time. Anyone with the URL can perform the action until it expires. This is useful for giving users temporary access to private files without making the bucket public or sharing IAM credentials.
+
+Question 9: Difference between Bucket Policy and IAM Policy?
+Answer: 
+1. IAM Policy: Attached to a user, group, or role. It defines what that identity can do in AWS.
+2. Bucket Policy: Attached directly to an S3 bucket. It defines who (which AWS accounts or users) can access that specific bucket. It is a resource-based policy.
+
+Question 10: How do you secure data at rest in S3?
+Answer: S3 supports multiple server-side encryption options:
+1. SSE-S3: S3 manages the encryption keys (AES-256).
+2. SSE-KMS: Uses AWS Key Management Service keys, providing an audit trail of key usage.
+3. SSE-C: The customer provides and manages the encryption keys.
+
+TOPIC 5: HANDS-ON AND TROUBLESHOOTING
+
+Question 11: How do you prevent accidental deletion of objects?
+Answer: 
+1. Enable Versioning: Keeps multiple variants of an object in the same bucket.
+2. MFA Delete: Requires multi-factor authentication to change bucket versioning or permanently delete an object.
+3. Object Lock: Prevents objects from being deleted or overwritten for a fixed amount of time or indefinitely.
+
+Question 12: How did you test S3 in your Spring Boot project?
+Answer: I used LocalStack to emulate S3 locally. I configured the AWS SDK S3Client with an endpoint override to http://localhost:4566 and enabled Path-Style Access in the S3Configuration. This allowed me to test buckets, multipart uploads, and presigned URLs end-to-end without needing a real AWS account or internet connection.

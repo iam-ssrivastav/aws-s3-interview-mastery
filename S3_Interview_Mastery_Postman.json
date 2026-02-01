@@ -1,0 +1,129 @@
+{
+    "info": {
+        "_postman_id": "s3-interview-mastery",
+        "name": "S3 Interview Mastery",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "List Buckets",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/api/s3/buckets",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "s3",
+                        "buckets"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Bucket",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/api/s3/buckets?name=interview-bucket",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "s3",
+                        "buckets"
+                    ],
+                    "query": [
+                        {
+                            "key": "name",
+                            "value": "interview-bucket"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Upload File",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "bucket",
+                            "value": "interview-bucket",
+                            "type": "text"
+                        },
+                        {
+                            "key": "key",
+                            "value": "test-file.txt",
+                            "type": "text"
+                        },
+                        {
+                            "key": "file",
+                            "type": "file",
+                            "src": []
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8080/api/s3/upload",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "s3",
+                        "upload"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Presigned URL",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/api/s3/presigned-get?bucket=interview-bucket&key=test-file.txt",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "s3",
+                        "presigned-get"
+                    ],
+                    "query": [
+                        {
+                            "key": "bucket",
+                            "value": "interview-bucket"
+                        },
+                        {
+                            "key": "key",
+                            "value": "test-file.txt"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

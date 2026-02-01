@@ -1,0 +1,9 @@
+target/
+*.class
+.DS_Store
+.idea/
+*.iml
+.mvn/
+mvnw
+mvnw.cmd
+app.log
