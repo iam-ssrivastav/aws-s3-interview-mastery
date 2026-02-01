@@ -1,0 +1,154 @@
+{
+    "info": {
+        "_postman_id": "s3-interview-mastery-full",
+        "name": "S3 Interview Mastery - Full API Contract",
+        "description": "Comprehensive API collection for S3 operations including Buckets, Objects, Presigned URLs, and Multipart Uploads.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Bucket Operations",
+            "item": [
+                {
+                    "name": "List All Buckets",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:8080/api/s3/buckets"
+                    }
+                },
+                {
+                    "name": "Create New Bucket",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/s3/buckets?name=interview-bucket",
+                            "query": [
+                                {
+                                    "key": "name",
+                                    "value": "interview-bucket"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Bucket",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:8080/api/s3/buckets/interview-bucket"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Object Operations",
+            "item": [
+                {
+                    "name": "Standard Upload",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "bucket",
+                                    "value": "interview-bucket",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "key",
+                                    "value": "demo/test.txt",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": "http://localhost:8080/api/s3/upload"
+                    }
+                },
+                {
+                    "name": "Download Object",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/s3/download?bucket=interview-bucket&key=demo/test.txt",
+                            "query": [
+                                {
+                                    "key": "bucket",
+                                    "value": "interview-bucket"
+                                },
+                                {
+                                    "key": "key",
+                                    "value": "demo/test.txt"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Manual Multipart Upload",
+                    "description": "Optimized for large files (>5MB)",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "bucket",
+                                    "value": "interview-bucket",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "key",
+                                    "value": "large-files/video.mp4",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": "http://localhost:8080/api/s3/multipart-upload"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Security & Presigned URLs",
+            "item": [
+                {
+                    "name": "Generate Presigned GET URL",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/s3/presigned-get?bucket=interview-bucket&key=demo/test.txt",
+                            "query": [
+                                {
+                                    "key": "bucket",
+                                    "value": "interview-bucket"
+                                },
+                                {
+                                    "key": "key",
+                                    "value": "demo/test.txt"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
